@@ -18,11 +18,15 @@ export default function HeroVideo() {
 
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+    // Slow, cinematic glide — the source plays back at a calmer pace.
+    const PLAYBACK_RATE = 0.6;
+
     const apply = () => {
       if (media.matches) {
         video.pause();
         video.removeAttribute("autoplay");
       } else {
+        video.playbackRate = PLAYBACK_RATE;
         // play() can reject if the tab is backgrounded; ignore that.
         void video.play().catch(() => {});
       }
