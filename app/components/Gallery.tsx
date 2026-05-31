@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Reveal from "./Reveal";
 
-// Bento: a tall feature image beside a 2x2 grid of supporting shots.
-// Five real images, five cells, no empty tiles. The order drives placement:
-// the feature spans two rows, the rest flow into the grid beside it.
+// Bento: a tall feature image plus a packed grid of supporting shots.
+// Eight real images, eight cells, no empty tiles. On desktop the feature
+// spans two rows of a 3-column grid; the remaining seven fill it exactly.
 const IMAGES: { src: string; alt: string; feature?: boolean }[] = [
   {
     src: "/arbeiten/work-waves.jpg",
@@ -20,6 +20,18 @@ const IMAGES: { src: string; alt: string; feature?: boolean }[] = [
     alt: "Stylist schneidet präzise das Haar einer Kundin",
   },
   { src: "/arbeiten/work-updo.jpg", alt: "Elegante Hochsteckfrisur von hinten" },
+  {
+    src: "/arbeiten/work-color.jpg",
+    alt: "Coloristin trägt Foliensträhnen auf",
+  },
+  {
+    src: "/arbeiten/work-wash.jpg",
+    alt: "Entspannende Haarwäsche am Waschbecken",
+  },
+  {
+    src: "/arbeiten/work-comb.jpg",
+    alt: "Detailaufnahme eines Kamms in glänzendem Haar",
+  },
 ];
 
 export default function Gallery() {
@@ -40,8 +52,8 @@ export default function Gallery() {
               delay={(i % 3) * 80}
               className={
                 img.feature
-                  ? "col-span-2 row-span-2 sm:col-span-6"
-                  : "sm:col-span-3"
+                  ? "sm:col-span-4 sm:row-span-2"
+                  : "sm:col-span-4"
               }
             >
               <figure className="group relative h-full w-full overflow-hidden">
@@ -51,8 +63,8 @@ export default function Gallery() {
                   fill
                   sizes={
                     img.feature
-                      ? "(max-width: 640px) 100vw, 50vw"
-                      : "(max-width: 640px) 50vw, 25vw"
+                      ? "(max-width: 640px) 50vw, 33vw"
+                      : "(max-width: 640px) 50vw, 33vw"
                   }
                   className="object-cover grayscale transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                 />
