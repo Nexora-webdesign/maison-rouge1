@@ -42,6 +42,9 @@ yarn-error.log*
 /public/hero/*.png
 /public/hero/kling_*.mp4
 
+# team raw sources (kept local; only the optimized team-*.jpg are shipped)
+/public/team/*.png
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -6,25 +6,19 @@ const TEAM = [
     name: "Élise Vogt",
     role: "Inhaberin & Coloristin",
     focus: "Natürliche Balayage und individuelle Farbkonzepte.",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=75",
+    img: "/team/team-elise.jpg",
   },
   {
     name: "Marc Lehmann",
     role: "Senior Stylist",
     focus: "Präziser Schnitt mit Auge für Form und Persönlichkeit.",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=75",
+    img: "/team/team-marc.jpg",
   },
   {
     name: "Sofia Bauer",
     role: "Brautstyling & Hochsteckfrisuren",
     focus: "Macht den schönsten Tag deines Lebens unvergesslich.",
-    img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=800&q=75",
-  },
-  {
-    name: "Daniel Krüger",
-    role: "Herrenfrisuren & Bart",
-    focus: "Klassische Schnitte mit modernem Touch.",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=75",
+    img: "/team/team-sofia.jpg",
   },
 ];
 
@@ -38,23 +32,23 @@ export default function Team() {
           </h2>
         </Reveal>
 
-        {/* Staggered portrait row: alternating tiles drop down a step on
+        {/* Staggered portrait row: the centre portrait drops a step on
             desktop for an editorial, contact-sheet rhythm. */}
-        <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 sm:gap-x-8 lg:grid-cols-4">
+        <ul className="mt-16 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-3">
           {TEAM.map((person, i) => (
             <Reveal
               as="li"
               key={person.name}
               variant="blur"
               delay={i * 100}
-              className={i % 2 === 1 ? "lg:mt-16" : ""}
+              className={i === 1 ? "lg:mt-20" : ""}
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden">
                 <Image
                   src={person.img}
                   alt={`Porträt von ${person.name}, ${person.role} bei Maison Rouge`}
                   fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                  sizes="(max-width: 640px) 100vw, 33vw"
                   className="object-cover grayscale"
                 />
               </div>
