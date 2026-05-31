@@ -4,7 +4,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[100dvh] items-end overflow-hidden bg-ink"
+      className="relative -mt-20 flex min-h-[100dvh] items-end overflow-hidden bg-ink"
     >
       {/* B&W graded background video (poster shows instantly) */}
       <HeroVideo />

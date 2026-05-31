@@ -14,26 +14,18 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Elevation toggle without a scroll listener: a 1px sentinel at the very
-  // top of the document is watched by an IntersectionObserver. When it
-  // leaves the viewport the page has scrolled past the top.
+  // Transparent over the hero, solid once the hero is fully scrolled past.
+  // We watch the hero section itself; the top rootMargin equals the header
+  // height (80px) so the switch fires exactly when the hero clears the bar.
   useEffect(() => {
-    const sentinel = document.createElement("div");
-    sentinel.style.cssText =
-      "position:absolute;top:0;left:0;height:1px;width:1px;pointer-events:none;";
-    sentinel.setAttribute("aria-hidden", "true");
-    document.body.prepend(sentinel);
-
+    const hero = document.getElementById("top");
+    if (!hero) return;
     const observer = new IntersectionObserver(
       ([entry]) => setScrolled(!entry.isIntersecting),
-      { threshold: 0 },
+      { rootMargin: "-80px 0px 0px 0px", threshold: 0 },
     );
-    observer.observe(sentinel);
-
-    return () => {
-      observer.disconnect();
-      sentinel.remove();
-    };
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
   // Lock body scroll while the mobile sheet is open.
@@ -44,18 +36,26 @@ export default function Header() {
     };
   }, [open]);
 
+  // The bar is opaque once scrolled past the hero, or while the mobile menu
+  // is open (so its links sit on a solid surface).
+  const solid = scrolled || open;
+
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
-        scrolled
-          ? "border-ink/10 bg-paper/90 backdrop-blur-md"
-          : "border-transparent bg-paper/70 backdrop-blur-sm"
+      className={`sticky top-0 z-50 transition-colors duration-300 ${
+        solid
+          ? "border-b border-ink/10 bg-paper/90 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-8">
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 lg:px-8">
         {/* Logo — the single Rouge signature touch lives here */}
         <a href="#top" className="group flex items-baseline gap-1.5 leading-none">
-          <span className="font-serif text-2xl font-medium tracking-tight text-ink">
+          <span
+            className={`font-serif text-2xl font-medium tracking-tight transition-colors duration-300 ${
+              solid ? "text-ink" : "text-paper"
+            }`}
+          >
             Maison Rouge
           </span>
           <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-rouge" />
@@ -67,14 +67,22 @@ export default function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="relative text-sm tracking-wide text-ink/75 transition-colors hover:text-ink after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full"
+              className={`relative text-sm tracking-wide transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-gold after:transition-all after:duration-300 hover:after:w-full ${
+                solid
+                  ? "text-ink/75 hover:text-ink"
+                  : "text-paper/80 hover:text-paper"
+              }`}
             >
               {item.label}
             </a>
           ))}
           <a
             href="#kontakt"
-            className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper transition-colors duration-300 hover:bg-gold hover:text-ink"
+            className={`rounded-full px-5 py-2.5 text-sm font-medium transition-colors duration-300 ${
+              solid
+                ? "bg-ink text-paper hover:bg-gold hover:text-ink"
+                : "border border-paper/40 text-paper hover:bg-paper hover:text-ink"
+            }`}
           >
             Termin buchen
           </a>
@@ -86,7 +94,9 @@ export default function Header() {
           aria-label={open ? "Menü schließen" : "Menü öffnen"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-11 w-11 items-center justify-center rounded-md text-ink md:hidden"
+          className={`flex h-11 w-11 items-center justify-center rounded-md transition-colors duration-300 md:hidden ${
+            solid ? "text-ink" : "text-paper"
+          }`}
         >
           <span className="relative block h-4 w-6">
             <span
