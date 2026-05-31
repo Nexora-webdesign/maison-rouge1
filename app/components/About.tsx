@@ -13,10 +13,10 @@ export default function About() {
             as="figure"
             className="relative lg:col-span-7 lg:col-start-1"
           >
-            <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[3/2] lg:aspect-[4/5]">
+            <div className="relative aspect-[3/2] w-full overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1400&q=75"
-                alt="Innenraum des Maison Rouge Salons mit warmem Licht und edlen Materialien"
+                src="/about/salon.jpg"
+                alt="Lounge-Bereich des Maison Rouge Salons mit Sitzecke, Marmortisch und edlen Materialien"
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className="object-cover grayscale"
