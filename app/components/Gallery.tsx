@@ -1,11 +1,24 @@
 import Image from "next/image";
 import Reveal from "./Reveal";
 
-// Editorial triptych: a dominant centre image flanked by two smaller ones.
-// Three real images, three cells — no empty tiles.
-const IMAGES: { src: string; alt: string }[] = [
+// Bento: a tall feature image beside a 2x2 grid of supporting shots.
+// Five real images, five cells, no empty tiles. The order drives placement:
+// the feature spans two rows, the rest flow into the grid beside it.
+const IMAGES: { src: string; alt: string; feature?: boolean }[] = [
+  {
+    src: "/arbeiten/work-waves.jpg",
+    alt: "Glamouröse, fließende Wellen mit Glanz-Finish",
+    feature: true,
+  },
   { src: "/arbeiten/work-bob.jpg", alt: "Klassischer Bob mit präziser Kante" },
-  { src: "/arbeiten/work-waves.jpg", alt: "Glamouröse, fließende Wellen mit Glanz-Finish" },
+  {
+    src: "/arbeiten/work-styling.jpg",
+    alt: "Stylistin föhnt und stylt das Haar einer Kundin",
+  },
+  {
+    src: "/arbeiten/work-cut.jpg",
+    alt: "Stylist schneidet präzise das Haar einer Kundin",
+  },
   { src: "/arbeiten/work-updo.jpg", alt: "Elegante Hochsteckfrisur von hinten" },
 ];
 
@@ -19,34 +32,33 @@ export default function Gallery() {
           </h2>
         </Reveal>
 
-        {/* Centre image is larger; the two side images sit vertically centred
-            beside it on desktop and stack on mobile. */}
-        <div className="mt-14 grid grid-cols-1 items-center gap-4 sm:grid-cols-12 sm:gap-5">
-          {IMAGES.map((img, i) => {
-            const isCentre = i === 1;
-            return (
-              <Reveal
-                key={img.src}
-                variant="fade"
-                delay={i * 90}
-                className={isCentre ? "sm:col-span-6" : "sm:col-span-3"}
-              >
-                <figure className="group relative aspect-[4/5] w-full overflow-hidden">
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    fill
-                    sizes={
-                      isCentre
-                        ? "(max-width: 640px) 100vw, 50vw"
-                        : "(max-width: 640px) 100vw, 25vw"
-                    }
-                    className="object-cover grayscale transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-                  />
-                </figure>
-              </Reveal>
-            );
-          })}
+        <div className="mt-14 grid grid-cols-2 auto-rows-[170px] gap-3 sm:grid-cols-12 sm:auto-rows-[250px] sm:gap-4">
+          {IMAGES.map((img, i) => (
+            <Reveal
+              key={img.src}
+              variant="fade"
+              delay={(i % 3) * 80}
+              className={
+                img.feature
+                  ? "col-span-2 row-span-2 sm:col-span-6"
+                  : "sm:col-span-3"
+              }
+            >
+              <figure className="group relative h-full w-full overflow-hidden">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  sizes={
+                    img.feature
+                      ? "(max-width: 640px) 100vw, 50vw"
+                      : "(max-width: 640px) 50vw, 25vw"
+                  }
+                  className="object-cover grayscale transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                />
+              </figure>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
