@@ -1,18 +1,12 @@
 import Image from "next/image";
 import Reveal from "./Reveal";
 
-// 8 images, 8 bento cells. The span map gives the grid an asymmetric rhythm
-// on desktop (two large anchors, six supporting tiles) and collapses to a
-// simple two-column stack on mobile.
-const IMAGES: { id: string; alt: string; span: string }[] = [
-  { id: "1633681926022-84c23e8cb2d6", alt: "Frische Coloration in warmen Tönen", span: "lg:col-span-2 lg:row-span-2" },
-  { id: "1487412947147-5cebf100ffc2", alt: "Eleganter Damen-Haarschnitt", span: "" },
-  { id: "1560869713-7d0a29430803", alt: "Natürliche Balayage-Strähnen", span: "" },
-  { id: "1522337360788-8b13dee7a37e", alt: "Stylistin bei der Arbeit im Salon", span: "lg:col-span-2" },
-  { id: "1562322140-8baeececf3df", alt: "Pflege und Föhn-Finish", span: "" },
-  { id: "1519699047748-de8e457a634e", alt: "Hochwertiges Beauty-Editorial", span: "" },
-  { id: "1605497788044-5a32c7078486", alt: "Moderner Herren-Schnitt", span: "" },
-  { id: "1595476108010-b4d1f102b1b1", alt: "Detailaufnahme einer Hochsteckfrisur", span: "lg:col-span-2" },
+// Editorial triptych: a dominant centre image flanked by two smaller ones.
+// Three real images, three cells — no empty tiles.
+const IMAGES: { src: string; alt: string }[] = [
+  { src: "/arbeiten/work-bob.jpg", alt: "Klassischer Bob mit präziser Kante" },
+  { src: "/arbeiten/work-waves.jpg", alt: "Glamouröse, fließende Wellen mit Glanz-Finish" },
+  { src: "/arbeiten/work-updo.jpg", alt: "Elegante Hochsteckfrisur von hinten" },
 ];
 
 export default function Gallery() {
@@ -25,25 +19,34 @@ export default function Gallery() {
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid auto-rows-[180px] grid-cols-2 gap-3 sm:auto-rows-[220px] sm:gap-4 lg:grid-cols-4 lg:auto-rows-[200px]">
-          {IMAGES.map((img, i) => (
-            <Reveal
-              key={img.id}
-              variant="fade"
-              delay={(i % 4) * 70}
-              className={img.span}
-            >
-              <div className="group relative h-full w-full overflow-hidden">
-                <Image
-                  src={`https://images.unsplash.com/photo-${img.id}?auto=format&fit=crop&w=900&q=75`}
-                  alt={img.alt}
-                  fill
-                  sizes="(max-width: 1024px) 50vw, 33vw"
-                  className="object-cover grayscale transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] group-hover:grayscale-0"
-                />
-              </div>
-            </Reveal>
-          ))}
+        {/* Centre image is larger; the two side images sit vertically centred
+            beside it on desktop and stack on mobile. */}
+        <div className="mt-14 grid grid-cols-1 items-center gap-4 sm:grid-cols-12 sm:gap-5">
+          {IMAGES.map((img, i) => {
+            const isCentre = i === 1;
+            return (
+              <Reveal
+                key={img.src}
+                variant="fade"
+                delay={i * 90}
+                className={isCentre ? "sm:col-span-6" : "sm:col-span-3"}
+              >
+                <figure className="group relative aspect-[4/5] w-full overflow-hidden">
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes={
+                      isCentre
+                        ? "(max-width: 640px) 100vw, 50vw"
+                        : "(max-width: 640px) 100vw, 25vw"
+                    }
+                    className="object-cover grayscale transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                  />
+                </figure>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

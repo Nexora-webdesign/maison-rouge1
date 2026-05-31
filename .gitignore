@@ -42,8 +42,10 @@ yarn-error.log*
 /public/hero/*.png
 /public/hero/kling_*.mp4
 
-# team raw sources (kept local; only the optimized team-*.jpg are shipped)
+# team & gallery raw sources (kept local; only the optimized *.jpg are shipped)
 /public/team/*.png
+/public/about/*.png
+/public/arbeiten/*.png
 
 # typescript
 *.tsbuildinfo
