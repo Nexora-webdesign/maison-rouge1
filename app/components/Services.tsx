@@ -42,35 +42,36 @@ export default function Services() {
           </h2>
         </Reveal>
 
-        {/* Indexed editorial list: each category is a row with a generous
-            two-column split. Hairlines separate categories only, never rows. */}
-        <div className="mt-16 divide-y divide-paper/12">
+        {/* Service menu: one column per category, separated by fine vertical
+            hairlines. Each column fills its own height, so the differing item
+            counts read as an intentional menu rather than empty grid cells. */}
+        <div className="mt-16 grid grid-cols-1 gap-y-12 border-t border-paper/12 pt-14 sm:grid-cols-3 sm:gap-y-0 sm:divide-x sm:divide-paper/12">
           {GROUPS.map((group, gi) => (
-            <Reveal key={group.title} delay={gi * 90}>
-              <div className="grid gap-6 py-10 sm:grid-cols-12 sm:gap-10">
-                <div className="sm:col-span-4">
-                  <h3 className="font-serif text-2xl font-light text-paper">
-                    {group.title}
-                  </h3>
-                  <p className="mt-3 max-w-xs text-sm leading-relaxed text-grey-300">
-                    {group.lead}
-                  </p>
-                </div>
-                <ul className="grid gap-x-8 gap-y-3 sm:col-span-8 sm:grid-cols-2">
-                  {group.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-baseline gap-3 text-[15px] text-paper/90 sm:text-base"
-                    >
-                      <span
-                        aria-hidden
-                        className="mt-2 h-px w-4 shrink-0 bg-gold"
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <Reveal
+              key={group.title}
+              delay={gi * 100}
+              className="sm:px-10 sm:first:pl-0 sm:last:pr-0"
+            >
+              <h3 className="font-serif text-2xl font-light text-paper">
+                {group.title}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-grey-300">
+                {group.lead}
+              </p>
+              <ul className="mt-7 space-y-3.5">
+                {group.items.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-[15px] text-paper/90 sm:text-base"
+                  >
+                    <span
+                      aria-hidden
+                      className="mt-[0.6rem] h-px w-3 shrink-0 bg-gold"
+                    />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </Reveal>
           ))}
         </div>
