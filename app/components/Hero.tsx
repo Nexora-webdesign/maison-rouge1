@@ -9,15 +9,16 @@ export default function Hero() {
       {/* B&W graded background video (poster shows instantly) */}
       <HeroVideo />
 
-      {/* Cinematic scrim: darker at the bottom so type stays AAA-legible,
-          plus a faint overall wash. Pure gradients, no layout cost. */}
+      {/* Cinematic scrim: keeps the whole lower text zone dark enough for the
+          gold eyebrow and white headline to stay legible over bright areas of
+          the footage. Pure gradients, no layout cost. */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/40"
+        className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/55 to-ink/20"
       />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-24 lg:px-8 lg:pb-28">
-        <p className="text-[11px] uppercase tracking-[0.4em] text-gold">
+        <p className="text-[11px] font-medium uppercase tracking-[0.4em] text-gold-bright [text-shadow:0_1px_12px_rgb(11_11_12/0.65)]">
           Friseurkunst · Münster
         </p>
 
