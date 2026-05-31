@@ -31,7 +31,7 @@ export default function DemoNotice() {
         {/* Text block */}
         <div className="flex flex-col items-center sm:items-start">
           <p className="font-serif text-ink [font-size:1.05rem] leading-tight">
-            Demo-Website von Nexora Studio
+            Demo-Website von Nexora-webdesign.de
           </p>
 
           {/* Desktop / full line */}
