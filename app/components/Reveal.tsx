@@ -1,6 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ElementType,
+  type ReactNode,
+} from "react";
 
 type RevealProps = {
   children: ReactNode;
@@ -8,19 +15,25 @@ type RevealProps = {
   as?: ElementType;
   /** Stagger entrance by ms — handy for grids of cards. */
   delay?: number;
+  /** Motion flavour: "up" (default, fade + rise), "fade", or "blur" (soft focus-in). */
+  variant?: "up" | "fade" | "blur";
+  /** Override the vertical travel distance for the "up"/"blur" variants. */
+  distance?: number;
   className?: string;
 };
 
 /**
- * Fade-in-up on scroll using a single IntersectionObserver per element.
- * Animates transform/opacity only (GPU-composited, no layout thrash) and
- * reveals just once. Users with `prefers-reduced-motion: reduce` see content
- * immediately — the CSS in globals.css neutralises the transition for them.
+ * Fade-in on scroll using a single IntersectionObserver per element.
+ * Animates transform/opacity/filter only (GPU-composited, no layout thrash)
+ * and reveals just once. Users with `prefers-reduced-motion: reduce` see
+ * content immediately — the CSS in globals.css neutralises the transition.
  */
 export default function Reveal({
   children,
   as: Tag = "div",
   delay = 0,
+  variant = "up",
+  distance,
   className = "",
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
@@ -49,11 +62,21 @@ export default function Reveal({
     return () => observer.disconnect();
   }, []);
 
+  const variantClass =
+    variant === "fade" ? "reveal--fade" : variant === "blur" ? "reveal--blur" : "";
+
+  const style: CSSProperties = {};
+  if (delay) style.transitionDelay = `${delay}ms`;
+  if (distance != null)
+    (style as Record<string, string>)["--reveal-distance"] = `${distance}px`;
+
   return (
     <Tag
       ref={ref}
-      className={`reveal ${visible ? "is-visible" : ""} ${className}`.trim()}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      className={`reveal ${variantClass} ${visible ? "is-visible" : ""} ${className}`
+        .replace(/\s+/g, " ")
+        .trim()}
+      style={Object.keys(style).length ? style : undefined}
     >
       {children}
     </Tag>

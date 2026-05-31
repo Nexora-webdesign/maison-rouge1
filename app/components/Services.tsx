@@ -1,74 +1,76 @@
 import Reveal from "./Reveal";
 
-type Service = { name: string; price: string };
+type Group = {
+  title: string;
+  lead: string;
+  items: string[];
+};
 
-const GROUPS: { title: string; items: Service[] }[] = [
+const GROUPS: Group[] = [
   {
     title: "Damen",
+    lead: "Schnitt, Farbe und Pflege, abgestimmt auf Haarstruktur und Typ.",
     items: [
-      { name: "Waschen, Schneiden, Föhnen", price: "ab 65 €" },
-      { name: "Komplett-Coloration", price: "ab 95 €" },
-      { name: "Strähnen / Highlights", price: "ab 110 €" },
-      { name: "Pflegebehandlung Premium", price: "ab 45 €" },
+      "Waschen, Schneiden, Föhnen",
+      "Komplett-Coloration",
+      "Strähnen & Highlights",
+      "Pflegebehandlung Premium",
     ],
   },
   {
     title: "Herren",
-    items: [
-      { name: "Klassischer Haarschnitt", price: "ab 38 €" },
-      { name: "Bartpflege & Rasur", price: "ab 28 €" },
-      { name: "Tönung", price: "ab 35 €" },
-    ],
+    lead: "Präziser Schnitt und Bartpflege mit Auge für Form.",
+    items: ["Klassischer Haarschnitt", "Bartpflege & Rasur", "Tönung"],
   },
   {
     title: "Besonderes",
-    items: [
-      { name: "Hochsteckfrisur", price: "ab 85 €" },
-      { name: "Brautstyling", price: "ab 180 €" },
-      { name: "Festtags-Styling", price: "ab 95 €" },
-    ],
+    lead: "Für die Momente, die in Erinnerung bleiben.",
+    items: ["Hochsteckfrisur", "Brautstyling", "Festtags-Styling"],
   },
 ];
 
 export default function Services() {
   return (
-    <section id="leistungen" className="scroll-mt-24 bg-cream py-20 sm:py-28">
-      <div className="mx-auto max-w-4xl px-6 lg:px-8">
-        <Reveal className="text-center">
-          <p className="text-xs font-medium uppercase tracking-[0.25em] text-accent">
+    <section id="leistungen" className="scroll-mt-24 bg-ink py-24 text-paper sm:py-32">
+      <div className="mx-auto max-w-6xl px-6 lg:px-8">
+        <Reveal>
+          <p className="text-[11px] uppercase tracking-[0.4em] text-gold">
             Leistungen
           </p>
-          <h2 className="mt-4 font-serif text-4xl font-medium leading-tight text-ink sm:text-5xl">
-            Unser Angebot.
+          <h2 className="mt-5 max-w-2xl font-serif text-4xl font-light leading-tight tracking-tight text-paper sm:text-5xl">
+            Was wir für dich tun.
           </h2>
         </Reveal>
 
-        <div className="mt-14 space-y-14">
+        {/* Indexed editorial list: each category is a row with a generous
+            two-column split. Hairlines separate categories only, never rows. */}
+        <div className="mt-16 divide-y divide-paper/12">
           {GROUPS.map((group, gi) => (
-            <Reveal key={group.title} delay={gi * 80}>
-              <h3 className="font-serif text-2xl font-medium text-accent-deep">
-                {group.title}
-              </h3>
-              <ul className="mt-5">
-                {group.items.map((item) => (
-                  <li
-                    key={item.name}
-                    className="flex items-baseline justify-between gap-4 border-b border-accent/25 py-4 last:border-b-0"
-                  >
-                    <span className="text-[15px] text-ink sm:text-base">
-                      {item.name}
-                    </span>
-                    {/* Dotted leader keeps prices visually aligned, editorial-style */}
-                    <span
-                      aria-hidden
-                      className="mx-3 hidden flex-1 translate-y-[-3px] border-b border-dotted border-accent/40 sm:block"
-                    />
-                    <span className="shrink-0 font-medium text-accent-deep">
-                      {item.price}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+            <Reveal key={group.title} delay={gi * 90}>
+              <div className="grid gap-6 py-10 sm:grid-cols-12 sm:gap-10">
+                <div className="sm:col-span-4">
+                  <h3 className="font-serif text-2xl font-light text-paper">
+                    {group.title}
+                  </h3>
+                  <p className="mt-3 max-w-xs text-sm leading-relaxed text-grey-300">
+                    {group.lead}
+                  </p>
+                </div>
+                <ul className="grid gap-x-8 gap-y-3 sm:col-span-8 sm:grid-cols-2">
+                  {group.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-baseline gap-3 text-[15px] text-paper/90 sm:text-base"
+                    >
+                      <span
+                        aria-hidden
+                        className="mt-2 h-px w-4 shrink-0 bg-gold"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </Reveal>
           ))}
         </div>

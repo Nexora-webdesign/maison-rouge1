@@ -1,18 +1,39 @@
 @import "tailwindcss";
 
-/* ── Maison Rouge design tokens ───────────────────────────────────────
-   Exposed to Tailwind v4 via @theme so utilities like `bg-cream`,
-   `text-ink`, `text-accent`, `font-serif` are generated automatically. */
-@theme {
-  --color-cream: #faf7f2;
-  --color-warm: #f2ede6;
-  --color-ink: #2a2825; /* text primary */
-  --color-muted: #6b6258; /* text secondary */
-  --color-accent: #c9a876; /* rose gold */
-  --color-accent-deep: #8b7355; /* warm brown */
+/* ── Maison Rouge — Modern Monochrome Luxe ────────────────────────────
+   Cool-neutral monochrome palette (black / off-white / greys) with a
+   sparing gold accent and a single rare deep-red "Rouge" signature.
+   Exposed to Tailwind v4 via @theme so utilities like `bg-paper`,
+   `text-ink`, `text-gold`, `font-serif` are generated automatically.
 
-  --font-serif: var(--font-cormorant), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+   COLOR RULES (a11y):
+   - Body text: ink-on-paper (~19:1) or paper-on-ink only.
+   - Secondary text: grey-600 on paper (~7:1, AA).
+   - Gold (~2.4:1 on paper) is DECORATIVE ONLY — hairlines, borders,
+     hover, display ≥24px. Never body copy on a light background.
+   - Rouge is used exactly once on the page (logo signature). */
+@theme {
+  --color-ink: #0b0b0c; /* off-black, primary text */
+  --color-paper: #f7f7f5; /* cool off-white, primary background */
+
+  --color-grey-50: #f4f4f5;
+  --color-grey-100: #e8e8ea;
+  --color-grey-200: #d2d3d6;
+  --color-grey-300: #b4b5ba;
+  --color-grey-400: #8a8c93;
+  --color-grey-500: #6b6d75;
+  --color-grey-600: #4e5057; /* secondary text on paper */
+  --color-grey-700: #3a3b41;
+  --color-grey-800: #27282c;
+  --color-grey-900: #161719;
+  --color-grey-950: #0e0e10;
+
+  --color-gold: #b8975a; /* decorative / large only */
+  --color-gold-bright: #d4b36a; /* hairlines & hover on dark surfaces */
+  --color-rouge: #7a1620; /* rare signature — used once */
+
+  --font-serif: var(--font-bodoni), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-geist), system-ui, -apple-system, sans-serif;
 }
 
 html {
@@ -21,30 +42,68 @@ html {
   scroll-padding-top: 6rem;
 }
 
+/* Keyboard focus: a clear, contrast-checked ring on every interactive
+   element. Uses the gold accent at large offset so it reads on both the
+   paper and ink sections (≥3:1 against both). */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 body {
-  background: var(--color-cream);
+  background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* ── Reveal-on-scroll (transform/opacity only, GPU-friendly) ────────── */
+/* ── Reveal-on-scroll (transform/opacity + optional blur) ──────────────
+   Variants set on the element: .reveal (default = up), .reveal--fade,
+   .reveal--blur. The distance is configurable via --reveal-distance. */
 .reveal {
+  --reveal-distance: 24px;
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(var(--reveal-distance));
   transition:
     opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 700ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
+}
+
+/* Fade only — no vertical travel. */
+.reveal--fade {
+  transform: none;
+}
+
+/* Soft focus-in: pairs a small blur with the fade-up. */
+.reveal--blur {
+  filter: blur(8px);
 }
 
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+  filter: none;
 }
 
-/* Respect users who prefer reduced motion: no scroll easing, no reveal. */
+/* Visually-hidden helper for skip links / icon-button labels. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Respect users who prefer reduced motion: no scroll easing, no reveal,
+   no blur. Content is shown immediately in its resting state. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -53,6 +112,7 @@ body {
   .reveal {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
 }

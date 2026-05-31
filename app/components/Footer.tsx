@@ -1,5 +1,6 @@
 const NAV = [
   { label: "Leistungen", href: "#leistungen" },
+  { label: "Preise", href: "#preise" },
   { label: "Team", href: "#team" },
   { label: "Galerie", href: "#galerie" },
   { label: "Kontakt", href: "#kontakt" },
@@ -29,26 +30,27 @@ const FacebookIcon = () => (
 
 export default function Footer() {
   return (
-    <footer className="bg-ink text-cream">
-      <div className="mx-auto max-w-6xl px-6 py-14 lg:px-8">
+    <footer className="bg-ink text-paper">
+      <div className="mx-auto max-w-6xl px-6 py-16 lg:px-8">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           {/* Brand */}
           <div>
-            <p className="font-serif text-2xl font-semibold tracking-tight">
+            <p className="flex items-baseline gap-1.5 font-serif text-2xl font-medium tracking-tight">
               Maison Rouge
+              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-rouge" />
             </p>
-            <p className="mt-2 text-sm text-cream/60">
+            <p className="mt-2 text-sm text-grey-400">
               Friseurkunst im Herzen Münsters.
             </p>
           </div>
 
           {/* Mini nav */}
-          <nav className="flex flex-wrap gap-x-8 gap-y-3">
+          <nav aria-label="Footer-Navigation" className="flex flex-wrap gap-x-8 gap-y-3">
             {NAV.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="text-sm text-cream/75 transition-colors hover:text-accent"
+                className="text-sm text-paper/75 transition-colors hover:text-gold"
               >
                 {item.label}
               </a>
@@ -60,23 +62,23 @@ export default function Footer() {
             <a
               href="#"
               aria-label="Maison Rouge auf Instagram"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/20 text-cream/75 transition-colors hover:border-accent hover:text-accent"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-paper/20 text-paper/75 transition-colors hover:border-gold hover:text-gold"
             >
               <InstagramIcon />
             </a>
             <a
               href="#"
               aria-label="Maison Rouge auf Facebook"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/20 text-cream/75 transition-colors hover:border-accent hover:text-accent"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-paper/20 text-paper/75 transition-colors hover:border-gold hover:text-gold"
             >
               <FacebookIcon />
             </a>
           </div>
         </div>
 
-        <div className="mt-12 h-px w-full bg-accent/30" />
+        <div className="mt-12 h-px w-full bg-paper/15" />
 
-        <div className="mt-6 flex flex-col gap-2 text-xs text-cream/50 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-6 flex flex-col gap-2 text-xs text-grey-400 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Maison Rouge · Prinzipalmarkt 12, 48143 Münster</p>
           <p>
             Demo-Website von Nexora Studio ·{" "}
@@ -84,7 +86,7 @@ export default function Footer() {
               href="https://nexora-webdesign.de"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent transition-colors hover:text-cream"
+              className="text-gold transition-colors hover:text-paper"
             >
               nexora-webdesign.de
             </a>

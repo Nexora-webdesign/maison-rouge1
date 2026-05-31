@@ -36,6 +36,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# hero video tooling & raw sources (kept local; only the optimized
+# hero.mp4 / hero.webm / hero-poster.jpg are shipped)
+/public/hero/ffmpeg.exe
+/public/hero/*.png
+/public/hero/kling_*.mp4
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

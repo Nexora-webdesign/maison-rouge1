@@ -1,8 +1,8 @@
 import Reveal from "./Reveal";
 
 const HOURS = [
-  { day: "Montag – Freitag", time: "9:00 – 19:00" },
-  { day: "Samstag", time: "9:00 – 16:00" },
+  { day: "Montag bis Freitag", time: "9:00 - 19:00" },
+  { day: "Samstag", time: "9:00 - 16:00" },
   { day: "Sonntag", time: "geschlossen" },
 ];
 
@@ -11,7 +11,7 @@ const PhoneIcon = () => (
     <path
       d="M6.6 10.8a15.6 15.6 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.58 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       strokeLinejoin="round"
     />
   </svg>
@@ -25,19 +25,11 @@ const WhatsappIcon = () => (
 
 const MailIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden>
-    <rect
-      x="3"
-      y="5"
-      width="18"
-      height="14"
-      rx="2"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
+    <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.25" />
     <path
       d="m4 7 8 6 8-6"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="1.25"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -45,42 +37,27 @@ const MailIcon = () => (
 );
 
 const CARDS = [
-  {
-    label: "Anrufen",
-    value: "0251 / 123 4567",
-    href: "tel:+492511234567",
-    icon: <PhoneIcon />,
-  },
-  {
-    label: "WhatsApp",
-    value: "+49 176 1234567",
-    href: "https://wa.me/491761234567",
-    icon: <WhatsappIcon />,
-  },
-  {
-    label: "E-Mail",
-    value: "hallo@maison-rouge.de",
-    href: "mailto:hallo@maison-rouge.de",
-    icon: <MailIcon />,
-  },
+  { label: "Anrufen", value: "0251 / 123 4567", href: "tel:+492511234567", icon: <PhoneIcon /> },
+  { label: "WhatsApp", value: "+49 176 1234567", href: "https://wa.me/491761234567", icon: <WhatsappIcon /> },
+  { label: "E-Mail", value: "hallo@maison-rouge.de", href: "mailto:hallo@maison-rouge.de", icon: <MailIcon /> },
 ];
 
 export default function Contact() {
   return (
-    <section id="kontakt" className="scroll-mt-24 bg-warm py-20 sm:py-28">
-      <div className="mx-auto max-w-5xl px-6 lg:px-8">
-        <Reveal className="text-center">
-          <p className="text-xs font-medium uppercase tracking-[0.25em] text-accent">
+    <section id="kontakt" className="scroll-mt-24 bg-ink py-24 text-paper sm:py-32">
+      <div className="mx-auto max-w-6xl px-6 lg:px-8">
+        <Reveal>
+          <p className="text-[11px] uppercase tracking-[0.4em] text-gold">
             Termin vereinbaren
           </p>
-          <h2 className="mt-4 font-serif text-4xl font-medium leading-tight text-ink sm:text-5xl">
+          <h2 className="mt-5 max-w-2xl font-serif text-4xl font-light leading-tight tracking-tight text-paper sm:text-5xl">
             Wir freuen uns auf dich.
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-2 lg:gap-12">
-          {/* Contact cards */}
-          <Reveal className="space-y-4">
+        <div className="mt-16 grid gap-x-12 gap-y-10 lg:grid-cols-2">
+          {/* Contact channels */}
+          <Reveal className="divide-y divide-paper/12 border-y border-paper/12">
             {CARDS.map((card) => (
               <a
                 key={card.label}
@@ -88,16 +65,16 @@ export default function Contact() {
                 {...(card.href.startsWith("http")
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
-                className="flex min-h-16 items-center gap-4 rounded-md bg-white px-5 py-4 shadow-sm ring-1 ring-black/5 transition-shadow duration-200 hover:shadow-md"
+                className="group flex min-h-16 items-center gap-5 py-5 transition-colors duration-300 hover:text-gold"
               >
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cream text-accent-deep">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-paper/20 text-gold transition-colors duration-300 group-hover:border-gold">
                   {card.icon}
                 </span>
                 <span className="flex flex-col">
-                  <span className="text-xs uppercase tracking-[0.15em] text-muted">
+                  <span className="text-[11px] uppercase tracking-[0.2em] text-grey-400">
                     {card.label}
                   </span>
-                  <span className="text-base font-medium text-ink">
+                  <span className="mt-0.5 text-base font-medium text-paper transition-colors duration-300 group-hover:text-gold">
                     {card.value}
                   </span>
                 </span>
@@ -105,33 +82,30 @@ export default function Contact() {
             ))}
           </Reveal>
 
-          {/* Opening hours */}
+          {/* Opening hours + address */}
           <Reveal delay={120}>
-            <div className="rounded-md bg-white px-7 py-7 shadow-sm ring-1 ring-black/5">
-              <h3 className="font-serif text-2xl font-medium text-ink">
-                Öffnungszeiten
-              </h3>
-              <div className="mt-5 h-px w-12 bg-accent" />
-              <ul className="mt-5">
-                {HOURS.map((row) => (
-                  <li
-                    key={row.day}
-                    className="flex items-center justify-between border-b border-accent/15 py-3.5 text-[15px] last:border-b-0"
-                  >
-                    <span className="text-muted">{row.day}</span>
-                    <span className="font-medium text-ink">{row.time}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <h3 className="font-serif text-2xl font-light text-paper">
+              Öffnungszeiten
+            </h3>
+            <div className="mt-5 h-px w-12 bg-gold" />
+            <ul className="mt-5">
+              {HOURS.map((row) => (
+                <li
+                  key={row.day}
+                  className="flex items-center justify-between border-b border-paper/10 py-3.5 text-[15px] last:border-b-0"
+                >
+                  <span className="text-grey-300">{row.day}</span>
+                  <span className="font-medium tabular-nums text-paper">
+                    {row.time}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-8 text-sm tracking-wide text-grey-400">
+              Prinzipalmarkt 12 · 48143 Münster
+            </p>
           </Reveal>
         </div>
-
-        <Reveal className="mt-12 text-center">
-          <p className="text-sm tracking-wide text-muted">
-            Prinzipalmarkt 12 · 48143 Münster
-          </p>
-        </Reveal>
       </div>
     </section>
   );

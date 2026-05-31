@@ -1,8 +1,9 @@
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Services from "./components/Services";
-import Team from "./components/Team";
+import Preise from "./components/Preise";
 import Gallery from "./components/Gallery";
+import Team from "./components/Team";
 import Contact from "./components/Contact";
 
 export default function Home() {
@@ -11,8 +12,9 @@ export default function Home() {
       <Hero />
       <About />
       <Services />
-      <Team />
+      <Preise />
       <Gallery />
+      <Team />
       <Contact />
     </>
   );
